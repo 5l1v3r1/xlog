@@ -1,0 +1,759 @@
+Nonterminals useless in grammar
+
+   string_modifier
+   string_modifiers
+
+
+Terminals unused in grammar
+
+   EOL
+   _REMOTE_USER_
+
+
+Grammar
+
+    0 $accept: rules $end
+
+    1 rules: %empty
+    2      | rules rule
+    3      | rules error rule
+
+    4 rule: _RULE_ _IDENTIFIER_ '{' meta strings condition '}'
+    5     | _REMOTEADDR_ _NONE_ remote_user _TIMELOCAL_ request_url _DIGIT_NUMBER_ response_size refer user_agent
+
+    6 remote_user: _NONE_
+    7            | _IDENTIFIER_
+
+    8 request_url: _TEXTSTRING_
+
+    9 response_size: _NONE_
+   10              | _DIGIT_NUMBER_
+
+   11 refer: _TEXTSTRING_
+
+   12 user_agent: _TEXTSTRING_
+
+   13 meta: %empty
+   14     | _META_ ':' meta_declarations
+
+   15 meta_declarations: meta_declaration
+   16                  | meta_declarations meta_declaration
+
+   17 meta_declaration: _IDENTIFIER_ '=' _TEXTSTRING_
+
+   18 strings: %empty
+   19        | _STRINGS_ ':' string_declarations
+
+   20 string_declarations: string_declaration
+   21                    | string_declarations string_declaration
+
+   22 string_declaration: _STRING_IDENTIFIER_ '=' _TEXTSTRING_ type_modifier url_oprate
+   23                   | _STRING_IDENTIFIER_ '=' _REGEXP_ type_modifier url_oprate
+
+   24 type_modifier: %empty
+   25              | _REQUEST_
+   26              | _REFER_
+   27              | _AGENT_
+
+   28 url_oprate: %empty
+   29           | _URL_DECODE_
+
+   30 condition: _CONDITION_ ':' boolean_expression
+
+   31 boolean_expression: _STRING_IDENTIFIER_
+   32                   | boolean_expression _AND_ boolean_expression
+   33                   | boolean_expression _OR_ boolean_expression
+   34                   | '(' boolean_expression ')'
+   35                   | _NOT_ boolean_expression
+   36                   | _REQUSET_METHOD_
+   37                   | _STATUS_ '=' _DIGIT_NUMBER_
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 34
+')' (41) 34
+':' (58) 14 19 30
+'=' (61) 17 22 23 37
+'{' (123) 4
+'}' (125) 4
+error (256) 3
+EOL (258)
+_RULE_ (259) 4
+_META_ (260) 14
+_STRINGS_ (261) 19
+_CONDITION_ (262) 30
+_NONE_ (263) 5 6 9
+_REQUEST_ (264) 25
+_AGENT_ (265) 27
+_REFER_ (266) 26
+_STATUS_ (267) 37
+_REMOTE_USER_ (268)
+_URL_DECODE_ (269) 29
+_TEXTSTRING_ (270) 8 11 12 17 22
+_STRING_IDENTIFIER_ (271) 22 23 31
+_IDENTIFIER_ (272) 4 7 17
+_AND_ (273) 32
+_OR_ (274) 33
+_NOT_ (275) 35
+_DIGIT_NUMBER_ (276) 5 10 37
+_REMOTEADDR_ (277) 5
+_TIMELOCAL_ (278) 5
+_REGEXP_ (279) 23
+_REQUSET_METHOD_ (280) 36
+
+
+Nonterminals, with rules where they appear
+
+$accept (32)
+    on left: 0
+rules (33)
+    on left: 1 2 3, on right: 0 2 3
+rule (34)
+    on left: 4 5, on right: 2 3
+remote_user (35)
+    on left: 6 7, on right: 5
+request_url (36)
+    on left: 8, on right: 5
+response_size (37)
+    on left: 9 10, on right: 5
+refer (38)
+    on left: 11, on right: 5
+user_agent (39)
+    on left: 12, on right: 5
+meta (40)
+    on left: 13 14, on right: 4
+meta_declarations (41)
+    on left: 15 16, on right: 14 16
+meta_declaration (42)
+    on left: 17, on right: 15 16
+strings (43)
+    on left: 18 19, on right: 4
+string_declarations (44)
+    on left: 20 21, on right: 19 21
+string_declaration (45)
+    on left: 22 23, on right: 20 21
+type_modifier (46)
+    on left: 24 25 26 27, on right: 22 23
+url_oprate (47)
+    on left: 28 29, on right: 22 23
+condition (48)
+    on left: 30, on right: 4
+boolean_expression (49)
+    on left: 31 32 33 34 35 36 37, on right: 30 32 33 34 35
+
+
+State 0
+
+    0 $accept: . rules $end
+
+    $default  reduce using rule 1 (rules)
+
+    rules  go to state 1
+
+
+State 1
+
+    0 $accept: rules . $end
+    2 rules: rules . rule
+    3      | rules . error rule
+
+    $end          shift, and go to state 2
+    error         shift, and go to state 3
+    _RULE_        shift, and go to state 4
+    _REMOTEADDR_  shift, and go to state 5
+
+    rule  go to state 6
+
+
+State 2
+
+    0 $accept: rules $end .
+
+    $default  accept
+
+
+State 3
+
+    3 rules: rules error . rule
+
+    _RULE_        shift, and go to state 4
+    _REMOTEADDR_  shift, and go to state 5
+
+    rule  go to state 7
+
+
+State 4
+
+    4 rule: _RULE_ . _IDENTIFIER_ '{' meta strings condition '}'
+
+    _IDENTIFIER_  shift, and go to state 8
+
+
+State 5
+
+    5 rule: _REMOTEADDR_ . _NONE_ remote_user _TIMELOCAL_ request_url _DIGIT_NUMBER_ response_size refer user_agent
+
+    _NONE_  shift, and go to state 9
+
+
+State 6
+
+    2 rules: rules rule .
+
+    $default  reduce using rule 2 (rules)
+
+
+State 7
+
+    3 rules: rules error rule .
+
+    $default  reduce using rule 3 (rules)
+
+
+State 8
+
+    4 rule: _RULE_ _IDENTIFIER_ . '{' meta strings condition '}'
+
+    '{'  shift, and go to state 10
+
+
+State 9
+
+    5 rule: _REMOTEADDR_ _NONE_ . remote_user _TIMELOCAL_ request_url _DIGIT_NUMBER_ response_size refer user_agent
+
+    _NONE_        shift, and go to state 11
+    _IDENTIFIER_  shift, and go to state 12
+
+    remote_user  go to state 13
+
+
+State 10
+
+    4 rule: _RULE_ _IDENTIFIER_ '{' . meta strings condition '}'
+
+    _META_  shift, and go to state 14
+
+    $default  reduce using rule 13 (meta)
+
+    meta  go to state 15
+
+
+State 11
+
+    6 remote_user: _NONE_ .
+
+    $default  reduce using rule 6 (remote_user)
+
+
+State 12
+
+    7 remote_user: _IDENTIFIER_ .
+
+    $default  reduce using rule 7 (remote_user)
+
+
+State 13
+
+    5 rule: _REMOTEADDR_ _NONE_ remote_user . _TIMELOCAL_ request_url _DIGIT_NUMBER_ response_size refer user_agent
+
+    _TIMELOCAL_  shift, and go to state 16
+
+
+State 14
+
+   14 meta: _META_ . ':' meta_declarations
+
+    ':'  shift, and go to state 17
+
+
+State 15
+
+    4 rule: _RULE_ _IDENTIFIER_ '{' meta . strings condition '}'
+
+    _STRINGS_  shift, and go to state 18
+
+    $default  reduce using rule 18 (strings)
+
+    strings  go to state 19
+
+
+State 16
+
+    5 rule: _REMOTEADDR_ _NONE_ remote_user _TIMELOCAL_ . request_url _DIGIT_NUMBER_ response_size refer user_agent
+
+    _TEXTSTRING_  shift, and go to state 20
+
+    request_url  go to state 21
+
+
+State 17
+
+   14 meta: _META_ ':' . meta_declarations
+
+    _IDENTIFIER_  shift, and go to state 22
+
+    meta_declarations  go to state 23
+    meta_declaration   go to state 24
+
+
+State 18
+
+   19 strings: _STRINGS_ . ':' string_declarations
+
+    ':'  shift, and go to state 25
+
+
+State 19
+
+    4 rule: _RULE_ _IDENTIFIER_ '{' meta strings . condition '}'
+
+    _CONDITION_  shift, and go to state 26
+
+    condition  go to state 27
+
+
+State 20
+
+    8 request_url: _TEXTSTRING_ .
+
+    $default  reduce using rule 8 (request_url)
+
+
+State 21
+
+    5 rule: _REMOTEADDR_ _NONE_ remote_user _TIMELOCAL_ request_url . _DIGIT_NUMBER_ response_size refer user_agent
+
+    _DIGIT_NUMBER_  shift, and go to state 28
+
+
+State 22
+
+   17 meta_declaration: _IDENTIFIER_ . '=' _TEXTSTRING_
+
+    '='  shift, and go to state 29
+
+
+State 23
+
+   14 meta: _META_ ':' meta_declarations .
+   16 meta_declarations: meta_declarations . meta_declaration
+
+    _IDENTIFIER_  shift, and go to state 22
+
+    $default  reduce using rule 14 (meta)
+
+    meta_declaration  go to state 30
+
+
+State 24
+
+   15 meta_declarations: meta_declaration .
+
+    $default  reduce using rule 15 (meta_declarations)
+
+
+State 25
+
+   19 strings: _STRINGS_ ':' . string_declarations
+
+    _STRING_IDENTIFIER_  shift, and go to state 31
+
+    string_declarations  go to state 32
+    string_declaration   go to state 33
+
+
+State 26
+
+   30 condition: _CONDITION_ . ':' boolean_expression
+
+    ':'  shift, and go to state 34
+
+
+State 27
+
+    4 rule: _RULE_ _IDENTIFIER_ '{' meta strings condition . '}'
+
+    '}'  shift, and go to state 35
+
+
+State 28
+
+    5 rule: _REMOTEADDR_ _NONE_ remote_user _TIMELOCAL_ request_url _DIGIT_NUMBER_ . response_size refer user_agent
+
+    _NONE_          shift, and go to state 36
+    _DIGIT_NUMBER_  shift, and go to state 37
+
+    response_size  go to state 38
+
+
+State 29
+
+   17 meta_declaration: _IDENTIFIER_ '=' . _TEXTSTRING_
+
+    _TEXTSTRING_  shift, and go to state 39
+
+
+State 30
+
+   16 meta_declarations: meta_declarations meta_declaration .
+
+    $default  reduce using rule 16 (meta_declarations)
+
+
+State 31
+
+   22 string_declaration: _STRING_IDENTIFIER_ . '=' _TEXTSTRING_ type_modifier url_oprate
+   23                   | _STRING_IDENTIFIER_ . '=' _REGEXP_ type_modifier url_oprate
+
+    '='  shift, and go to state 40
+
+
+State 32
+
+   19 strings: _STRINGS_ ':' string_declarations .
+   21 string_declarations: string_declarations . string_declaration
+
+    _STRING_IDENTIFIER_  shift, and go to state 31
+
+    $default  reduce using rule 19 (strings)
+
+    string_declaration  go to state 41
+
+
+State 33
+
+   20 string_declarations: string_declaration .
+
+    $default  reduce using rule 20 (string_declarations)
+
+
+State 34
+
+   30 condition: _CONDITION_ ':' . boolean_expression
+
+    _STATUS_             shift, and go to state 42
+    _STRING_IDENTIFIER_  shift, and go to state 43
+    _NOT_                shift, and go to state 44
+    _REQUSET_METHOD_     shift, and go to state 45
+    '('                  shift, and go to state 46
+
+    boolean_expression  go to state 47
+
+
+State 35
+
+    4 rule: _RULE_ _IDENTIFIER_ '{' meta strings condition '}' .
+
+    $default  reduce using rule 4 (rule)
+
+
+State 36
+
+    9 response_size: _NONE_ .
+
+    $default  reduce using rule 9 (response_size)
+
+
+State 37
+
+   10 response_size: _DIGIT_NUMBER_ .
+
+    $default  reduce using rule 10 (response_size)
+
+
+State 38
+
+    5 rule: _REMOTEADDR_ _NONE_ remote_user _TIMELOCAL_ request_url _DIGIT_NUMBER_ response_size . refer user_agent
+
+    _TEXTSTRING_  shift, and go to state 48
+
+    refer  go to state 49
+
+
+State 39
+
+   17 meta_declaration: _IDENTIFIER_ '=' _TEXTSTRING_ .
+
+    $default  reduce using rule 17 (meta_declaration)
+
+
+State 40
+
+   22 string_declaration: _STRING_IDENTIFIER_ '=' . _TEXTSTRING_ type_modifier url_oprate
+   23                   | _STRING_IDENTIFIER_ '=' . _REGEXP_ type_modifier url_oprate
+
+    _TEXTSTRING_  shift, and go to state 50
+    _REGEXP_      shift, and go to state 51
+
+
+State 41
+
+   21 string_declarations: string_declarations string_declaration .
+
+    $default  reduce using rule 21 (string_declarations)
+
+
+State 42
+
+   37 boolean_expression: _STATUS_ . '=' _DIGIT_NUMBER_
+
+    '='  shift, and go to state 52
+
+
+State 43
+
+   31 boolean_expression: _STRING_IDENTIFIER_ .
+
+    $default  reduce using rule 31 (boolean_expression)
+
+
+State 44
+
+   35 boolean_expression: _NOT_ . boolean_expression
+
+    _STATUS_             shift, and go to state 42
+    _STRING_IDENTIFIER_  shift, and go to state 43
+    _NOT_                shift, and go to state 44
+    _REQUSET_METHOD_     shift, and go to state 45
+    '('                  shift, and go to state 46
+
+    boolean_expression  go to state 53
+
+
+State 45
+
+   36 boolean_expression: _REQUSET_METHOD_ .
+
+    $default  reduce using rule 36 (boolean_expression)
+
+
+State 46
+
+   34 boolean_expression: '(' . boolean_expression ')'
+
+    _STATUS_             shift, and go to state 42
+    _STRING_IDENTIFIER_  shift, and go to state 43
+    _NOT_                shift, and go to state 44
+    _REQUSET_METHOD_     shift, and go to state 45
+    '('                  shift, and go to state 46
+
+    boolean_expression  go to state 54
+
+
+State 47
+
+   30 condition: _CONDITION_ ':' boolean_expression .
+   32 boolean_expression: boolean_expression . _AND_ boolean_expression
+   33                   | boolean_expression . _OR_ boolean_expression
+
+    _AND_  shift, and go to state 55
+    _OR_   shift, and go to state 56
+
+    $default  reduce using rule 30 (condition)
+
+
+State 48
+
+   11 refer: _TEXTSTRING_ .
+
+    $default  reduce using rule 11 (refer)
+
+
+State 49
+
+    5 rule: _REMOTEADDR_ _NONE_ remote_user _TIMELOCAL_ request_url _DIGIT_NUMBER_ response_size refer . user_agent
+
+    _TEXTSTRING_  shift, and go to state 57
+
+    user_agent  go to state 58
+
+
+State 50
+
+   22 string_declaration: _STRING_IDENTIFIER_ '=' _TEXTSTRING_ . type_modifier url_oprate
+
+    _REQUEST_  shift, and go to state 59
+    _AGENT_    shift, and go to state 60
+    _REFER_    shift, and go to state 61
+
+    $default  reduce using rule 24 (type_modifier)
+
+    type_modifier  go to state 62
+
+
+State 51
+
+   23 string_declaration: _STRING_IDENTIFIER_ '=' _REGEXP_ . type_modifier url_oprate
+
+    _REQUEST_  shift, and go to state 59
+    _AGENT_    shift, and go to state 60
+    _REFER_    shift, and go to state 61
+
+    $default  reduce using rule 24 (type_modifier)
+
+    type_modifier  go to state 63
+
+
+State 52
+
+   37 boolean_expression: _STATUS_ '=' . _DIGIT_NUMBER_
+
+    _DIGIT_NUMBER_  shift, and go to state 64
+
+
+State 53
+
+   32 boolean_expression: boolean_expression . _AND_ boolean_expression
+   33                   | boolean_expression . _OR_ boolean_expression
+   35                   | _NOT_ boolean_expression .
+
+    $default  reduce using rule 35 (boolean_expression)
+
+
+State 54
+
+   32 boolean_expression: boolean_expression . _AND_ boolean_expression
+   33                   | boolean_expression . _OR_ boolean_expression
+   34                   | '(' boolean_expression . ')'
+
+    _AND_  shift, and go to state 55
+    _OR_   shift, and go to state 56
+    ')'    shift, and go to state 65
+
+
+State 55
+
+   32 boolean_expression: boolean_expression _AND_ . boolean_expression
+
+    _STATUS_             shift, and go to state 42
+    _STRING_IDENTIFIER_  shift, and go to state 43
+    _NOT_                shift, and go to state 44
+    _REQUSET_METHOD_     shift, and go to state 45
+    '('                  shift, and go to state 46
+
+    boolean_expression  go to state 66
+
+
+State 56
+
+   33 boolean_expression: boolean_expression _OR_ . boolean_expression
+
+    _STATUS_             shift, and go to state 42
+    _STRING_IDENTIFIER_  shift, and go to state 43
+    _NOT_                shift, and go to state 44
+    _REQUSET_METHOD_     shift, and go to state 45
+    '('                  shift, and go to state 46
+
+    boolean_expression  go to state 67
+
+
+State 57
+
+   12 user_agent: _TEXTSTRING_ .
+
+    $default  reduce using rule 12 (user_agent)
+
+
+State 58
+
+    5 rule: _REMOTEADDR_ _NONE_ remote_user _TIMELOCAL_ request_url _DIGIT_NUMBER_ response_size refer user_agent .
+
+    $default  reduce using rule 5 (rule)
+
+
+State 59
+
+   25 type_modifier: _REQUEST_ .
+
+    $default  reduce using rule 25 (type_modifier)
+
+
+State 60
+
+   27 type_modifier: _AGENT_ .
+
+    $default  reduce using rule 27 (type_modifier)
+
+
+State 61
+
+   26 type_modifier: _REFER_ .
+
+    $default  reduce using rule 26 (type_modifier)
+
+
+State 62
+
+   22 string_declaration: _STRING_IDENTIFIER_ '=' _TEXTSTRING_ type_modifier . url_oprate
+
+    _URL_DECODE_  shift, and go to state 68
+
+    $default  reduce using rule 28 (url_oprate)
+
+    url_oprate  go to state 69
+
+
+State 63
+
+   23 string_declaration: _STRING_IDENTIFIER_ '=' _REGEXP_ type_modifier . url_oprate
+
+    _URL_DECODE_  shift, and go to state 68
+
+    $default  reduce using rule 28 (url_oprate)
+
+    url_oprate  go to state 70
+
+
+State 64
+
+   37 boolean_expression: _STATUS_ '=' _DIGIT_NUMBER_ .
+
+    $default  reduce using rule 37 (boolean_expression)
+
+
+State 65
+
+   34 boolean_expression: '(' boolean_expression ')' .
+
+    $default  reduce using rule 34 (boolean_expression)
+
+
+State 66
+
+   32 boolean_expression: boolean_expression . _AND_ boolean_expression
+   32                   | boolean_expression _AND_ boolean_expression .
+   33                   | boolean_expression . _OR_ boolean_expression
+
+    $default  reduce using rule 32 (boolean_expression)
+
+
+State 67
+
+   32 boolean_expression: boolean_expression . _AND_ boolean_expression
+   33                   | boolean_expression . _OR_ boolean_expression
+   33                   | boolean_expression _OR_ boolean_expression .
+
+    $default  reduce using rule 33 (boolean_expression)
+
+
+State 68
+
+   29 url_oprate: _URL_DECODE_ .
+
+    $default  reduce using rule 29 (url_oprate)
+
+
+State 69
+
+   22 string_declaration: _STRING_IDENTIFIER_ '=' _TEXTSTRING_ type_modifier url_oprate .
+
+    $default  reduce using rule 22 (string_declaration)
+
+
+State 70
+
+   23 string_declaration: _STRING_IDENTIFIER_ '=' _REGEXP_ type_modifier url_oprate .
+
+    $default  reduce using rule 23 (string_declaration)
