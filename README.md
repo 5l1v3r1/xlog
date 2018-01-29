@@ -1,8 +1,8 @@
 # xlog</br>
-web日志扫描工具</br>
+`web日志扫描工具`</br>
 </br>
 </br>
-一、语法规则</br>
+`一、语法规则`</br>
 //例1: 检测url</br>
 //含义:请求url种含有$str,不含有$str1 且 请求为post 或者get方法,且返回请求为404的</br>
 //关键字url:用于修饰str变量为匹配请求的url</br>
@@ -59,7 +59,7 @@ rule yara_reg {</br>
 　　condition:</br>
 　　　　$str  </br>
 }</br>
-二、使用</br>
+`二、使用`</br>
 1、下载源码后，可直接make可生产scanner程序</br>
 2、执行：./scanner   规则文件路径  web访问日志</br>
 3、输出命中的结果：</br>
