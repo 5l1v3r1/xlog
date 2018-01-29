@@ -1,7 +1,8 @@
 # xlog</br>
-`web日志扫描工具`</br>
+`基于flex & bison的web日志扫描工具`</br>
 </br>
 </br>
+与二进制扫描工具yara语法相似</br>
 `一、语法规则`</br>
 //例1: 检测url</br>
 //含义:请求url种含有$str,不含有$str1 且 请求为post 或者get方法,且返回请求为404的</br>
