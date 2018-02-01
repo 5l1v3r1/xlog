@@ -72,3 +72,5 @@ rule yara_reg {</br>
 　　　　....</br>
 　　　　-st 参数time       输出访问时间大于time的结果</br>
 　　　　-et 参数time       输出访问时间小雨time的结果      </br>
+
+ 问题反馈邮箱:apxar@qq.com
